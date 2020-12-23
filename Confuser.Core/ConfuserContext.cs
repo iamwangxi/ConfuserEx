@@ -14,6 +14,8 @@ namespace Confuser.Core {
 		readonly ServiceRegistry registry = new ServiceRegistry();
 		internal CancellationToken token;
 
+		public string namespace_prefix = null;
+
 		/// <summary>
 		///     Gets the logger used for logging events.
 		/// </summary>

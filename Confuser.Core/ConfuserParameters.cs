@@ -12,6 +12,8 @@ namespace Confuser.Core {
 		/// <value>The Confuser project.</value>
 		public ConfuserProject Project { get; set; }
 
+		public string namespace_prefix = null;
+
 		/// <summary>
 		///     Gets or sets the logger that used to log the protection process.
 		/// </summary>

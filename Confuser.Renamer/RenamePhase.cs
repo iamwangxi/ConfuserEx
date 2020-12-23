@@ -80,7 +80,7 @@ namespace Confuser.Renamer {
 						typeDef.Namespace = "";
 					}
 					else {
-						typeDef.Namespace = service.ObfuscateName(typeDef.Namespace, mode);
+						typeDef.Namespace = context.namespace_prefix + service.ObfuscateName(typeDef.Namespace, mode);
 						typeDef.Name = service.ObfuscateName(typeDef.Name, mode);
 					}
 					foreach (var param in typeDef.GenericParameters)
