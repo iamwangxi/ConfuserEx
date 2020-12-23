@@ -18,6 +18,7 @@ namespace Confuser.CLI {
 				bool noPause = false;
 				bool debug = false;
 				string outDir = null;
+				string baseDir = null;
 				List<string> probePaths = new List<string>();
 				List<string> plugins = new List<string>();
 				var p = new OptionSet {
@@ -36,6 +37,9 @@ namespace Confuser.CLI {
 					}, {
 						"debug", "specifies debug symbol generation.",
 						value => { debug = (value != null); }
+					}, {
+						"baseDir=", "The base directory of all relative path used in the project document.",
+						value => { baseDir = value; }
 					}
 				};
 
@@ -60,7 +64,23 @@ namespace Confuser.CLI {
 						var xmlDoc = new XmlDocument();
 						xmlDoc.Load(files[0]);
 						proj.Load(xmlDoc);
-						proj.BaseDirectory = Path.Combine(Path.GetDirectoryName(files[0]), proj.BaseDirectory);
+						foreach (var path in probePaths)
+							proj.ProbePaths.Add(path);
+						foreach (var path in plugins)
+							proj.PluginPaths.Add(path);
+
+						if (baseDir != null && baseDir.Length > 0) {
+							proj.BaseDirectory = Path.Combine(Path.GetDirectoryName(files[0]), baseDir);
+						}
+						else {
+							proj.BaseDirectory = Path.Combine(Path.GetDirectoryName(files[0]), proj.BaseDirectory);
+						}
+
+						if (outDir != null && outDir.Length > 0) {
+							proj.OutputDirectory = outDir;
+						}
+
+						proj.Debug = debug;
 					}
 					catch (Exception ex) {
 						WriteLineWithColor(ConsoleColor.Red, "Failed to load project:");
