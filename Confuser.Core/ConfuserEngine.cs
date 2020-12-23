@@ -174,6 +174,7 @@ namespace Confuser.Core {
 				}
 
 				context.CheckCancellation();
+				context.namespace_prefix = parameters.namespace_prefix;
 
 				//7. Run pipeline
 				RunPipeline(pipeline, context);

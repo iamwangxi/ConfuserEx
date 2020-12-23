@@ -20,6 +20,7 @@ namespace Confuser.CLI {
 				string outDir = null;
 				List<string> probePaths = new List<string>();
 				List<string> plugins = new List<string>();
+				string namespace_prefix = null;
 				var p = new OptionSet {
 					{
 						"n|nopause", "no pause after finishing protection.",
@@ -36,6 +37,9 @@ namespace Confuser.CLI {
 					}, {
 						"debug", "specifies debug symbol generation.",
 						value => { debug = (value != null); }
+					}, {
+						"namespace_prefix=", "The prefix that will add to the obfuscated namespace",
+						value => { namespace_prefix = value; }
 					}
 				};
 
@@ -104,7 +108,7 @@ namespace Confuser.CLI {
 					proj.Debug = debug;
 					parameters.Project = proj;
 				}
-
+				parameters.namespace_prefix = namespace_prefix;
 				int retVal = RunProject(parameters);
 
 				if (NeedPause() && !noPause) {
